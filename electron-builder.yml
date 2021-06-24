@@ -1,0 +1,12 @@
+appId: io.github.rajsolai.pdbdesktop
+productName: Personal Desktop
+copyright: Copyright © 2021 Solai Raj
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null
