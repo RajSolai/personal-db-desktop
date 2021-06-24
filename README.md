@@ -1,38 +1,23 @@
-<p align="center"><img src="https://i.imgur.com/flcMvDC.png"></p>
 
-## Usage
+## Personal Database
 
-### Create an App
+Manage and Maintain a personal Database.
+This application is made for my own specific usage.
 
-```
-# with npx
-$ npx create-nextron-app my-app --example with-typescript-material-ui
+### Why we Need a Personal Database
 
-# with yarn
-$ yarn create nextron-app my-app --example with-typescript-material-ui
+- Personal Notes
 
-# with pnpx
-$ pnpx create-nextron-app my-app --example with-typescript-material-ui
-```
+- Project Management
 
-### Install Dependencies
+- Just to keep track of Life 💌️
 
-```
-$ cd my-app
+[Read More about this by Derek Sivers](https://sive.rs/dbt)
 
-# using yarn or npm
-$ yarn (or `npm install`)
+[![Kalle Hallden](https://img.youtube.com/vi/QfGZpx0iGvM/0.jpg)](https://www.youtube.com/watch?v=QfGZpx0iGvM&t)
+Kalle Hallden's Video on "Why You Need a Database"
 
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
 
-### Use it
+### Screenshots
 
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```
+![Project Management Page](https://github.com/RajSolai/personal-db-desktop/raw/master/docs/screenshot.png)
