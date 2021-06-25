@@ -6,6 +6,15 @@
   display: none;
 }
 
+.nstart{
+  color: #ff867c;
+}
+.completed{
+  color: #80e27e;
+}
+.progress{
+  color: #ffff6b;
+}
 .wrapper{
   margin: 2rem;
 }

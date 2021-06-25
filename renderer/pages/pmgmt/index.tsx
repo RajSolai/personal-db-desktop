@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import axios from "axios/dist/axios";
 import Paper  from "@material-ui/core/Paper/Paper";
 import IconButton from "@material-ui/core/IconButton/IconButton";
@@ -22,6 +23,7 @@ const Pmgmt: React.FC<any> = () => {
   const [progress, setProgress] = useState<string[]>([]);
   const [completed, setCompleted] = useState<string[]>([]);
   const [taskText, setTaskText] = useState<string>("");
+  const [dbDesc,setDesc] = useState<string>("");
   const [dbEndPt, setDbEndPt] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -29,8 +31,7 @@ const Pmgmt: React.FC<any> = () => {
     let currentDbString = localStorage.getItem("currentdb");
     let dbDetails = JSON.parse(currentDbString == null ? "" : currentDbString);
     const { dbname, dbdesc, dbendpoint } = dbDetails;
-
-    console.log("got db details");
+    setDesc(dbdesc);
     axios
       .get<ProjectDataBase>(
         `https://fast-savannah-26464.herokuapp.com/project/${dbendpoint}`
@@ -43,7 +44,6 @@ const Pmgmt: React.FC<any> = () => {
         setProgress(res.data.body.progress);
         setCompleted(res.data.body.completed);
       });
-    console.log("data fetch complete");
     setLoading(false);
   }, []);
 
@@ -100,17 +100,14 @@ const Pmgmt: React.FC<any> = () => {
   };
   const removeFromNotStarted = (task: string) => {
     let temp = notStarted.filter((e) => e != task);
-    console.log(temp);
     setNotStarted(temp);
   };
   const removeFromProgress = (task: string) => {
     let temp = progress.filter((e) => e != task);
-    console.log(temp);
     setProgress(temp);
   };
   const removeFromCompleted = (task: string) => {
     let temp = completed.filter((e) => e != task);
-    console.log(temp);
     setCompleted(temp);
   };
   const saveData = async () => {
@@ -146,6 +143,9 @@ const Pmgmt: React.FC<any> = () => {
 
   return (
     <>
+      <Head>
+      <title>{dbName}</title>
+      </Head>
       <div className={styles.wrapper}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/">
@@ -154,7 +154,7 @@ const Pmgmt: React.FC<any> = () => {
           <Typography color="textPrimary">{dbName}</Typography>
         </Breadcrumbs>
         <h1>Project {dbName}</h1>
-        {/* // TODO: add db desc here */}
+        <span>{dbDesc}</span>
         <div className={styles.inputWrapper}>
           <TextField
             id="standard-basic"
@@ -178,7 +178,7 @@ const Pmgmt: React.FC<any> = () => {
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2>Not Started</h2>
+            <h2 className={styles.nstart} >Not Started</h2>
             {isLoading ? (
               <p>loading</p>
             ) : (
@@ -199,7 +199,7 @@ const Pmgmt: React.FC<any> = () => {
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2>In Progress</h2>
+            <h2 className={styles.progress}>In Progress</h2>
 
             {isLoading ? (
               <p>loading</p>
@@ -221,7 +221,7 @@ const Pmgmt: React.FC<any> = () => {
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2>Completed</h2>
+            <h2 className={styles.completed}>Completed</h2>
 
             {isLoading ? (
               <p>loading</p>
