@@ -18,7 +18,7 @@ if (isProd) {
     autoHideMenuBar: true,
     darkTheme: true,
     width: 1160,
-    height: 700,
+    height: 700
   });
 
   if (isProd) {

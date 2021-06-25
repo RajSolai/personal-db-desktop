@@ -73,6 +73,11 @@ export default (windowName: string, options: BrowserWindowConstructorOptions): B
     webPreferences: {
       nodeIntegration: false,
       devTools: false,
+      nodeIntegrationInWorker: false,
+      nodeIntegrationInSubFrames: false,
+      sandbox: false,
+      enableRemoteModule: false,
+      enableWebSQL: false,
       contextIsolation: false,
       ...options.webPreferences,
     },
