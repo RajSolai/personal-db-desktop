@@ -1,5 +1,6 @@
-import { Paper, Card , IconButton } from "@material-ui/core";
-import { Delete } from "@material-ui/icons";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import Card from "@material-ui/core/Card/Card";
+import Delete from "@material-ui/icons/Delete";
 import styles from "../styles/Home.module.css";
 import { CardProps } from "../interfaces/props";
 

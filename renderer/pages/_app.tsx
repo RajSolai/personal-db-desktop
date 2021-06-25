@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
-import { ThemeProvider } from "@material-ui/core/styles";
-import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from '@material-ui/core/styles';
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import type { AppProps } from "next/app";
 import styles from "../styles/Home.module.css";
@@ -18,7 +18,7 @@ export default function MyApp(props: AppProps) {
   React.useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
+      jssStyles.parentElement?.removeChild(jssStyles);
     }
   }, []);
 

@@ -1,24 +1,23 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import {
-  Card,
-  Fab,
-  Dialog,
-  Select,
-  Snackbar,
-  IconButton,
-  DialogActions,
-  DialogContent,
-  TextField,
-  Button,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import axios from "axios";
+import axios from "axios/dist/axios";
+import Dialog from "@material-ui/core/Dialog/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+import Select from "@material-ui/core/Select/Select";
+import Card from "@material-ui/core/Card/Card";
+import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText"; 
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import TextField from "@material-ui/core/TextField/TextField";
+import Button from "@material-ui/core/Button/Button";
+import Fab from "@material-ui/core/Fab/Fab";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import { ProjectDataBase } from "../interfaces/props";
-import { AddRounded, Close } from "@material-ui/icons";
+import Close from "@material-ui/icons/Close";
+import AddRounded from "@material-ui/icons/AddRounded";
 
 export default function Home() {
   const router = useRouter();
@@ -51,7 +50,6 @@ export default function Home() {
   useEffect(() => {
     getData();
   }, []);
-
 
   const AddProject = async () => {
     setOpen(false);

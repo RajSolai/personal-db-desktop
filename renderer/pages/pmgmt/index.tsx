@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import {
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Breadcrumbs,
-  Link,
-  Fab,
-  Snackbar,
-  IconButton,
-} from "@material-ui/core";
+import axios from "axios/dist/axios";
+import Paper  from "@material-ui/core/Paper/Paper";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import TextField from "@material-ui/core/TextField/TextField";
+import Button from "@material-ui/core/Button/Button";
+import Fab from "@material-ui/core/Fab/Fab";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import Breadcrumbs from "@material-ui/core/Breadcrumbs/Breadcrumbs";
+import Link from "@material-ui/core/Link/Link";
+import Typography from "@material-ui/core/Typography/Typography";
 import TaskCard from "../../components/taskcard";
 import styles from "../../styles/Home.module.css";
-import { Save, Close } from "@material-ui/icons";
+import Save from "@material-ui/icons/Save";
+import Close from "@material-ui/icons/Close";
 import { ProjectDataBase } from "../../interfaces/props";
 
 const Pmgmt: React.FC<any> = () => {
@@ -155,6 +154,7 @@ const Pmgmt: React.FC<any> = () => {
           <Typography color="textPrimary">{dbName}</Typography>
         </Breadcrumbs>
         <h1>Project {dbName}</h1>
+        {/* // TODO: add db desc here */}
         <div className={styles.inputWrapper}>
           <TextField
             id="standard-basic"

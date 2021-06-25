@@ -1,9 +1,12 @@
 appId: io.github.rajsolai.pdbdesktop
-productName: Personal Desktop
+productName: Personal Database Desktop
 copyright: Copyright © 2021 Solai Raj
 directories:
   output: dist
   buildResources: resources
+linux:
+  target: 'AppImage'
+asar: true
 files:
   - from: .
     filter:
