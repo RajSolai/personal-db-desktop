@@ -1,4 +1,4 @@
-.body::-webkit-scrollbar{
+.body::-webkit-scrollbar {
   display: none;
 }
 
@@ -6,16 +6,16 @@
   display: none;
 }
 
-.nstart{
+.nstart {
   color: #ff867c;
 }
-.completed{
+.completed {
   color: #80e27e;
 }
-.progress{
+.progress {
   color: #ffff6b;
 }
-.wrapper{
+.wrapper {
   margin: 2rem;
 }
 
@@ -23,6 +23,12 @@
   position: fixed !important;
   top: 85vh;
   left: 93vw;
+}
+
+.fab2 {
+  position: fixed !important;
+  top: 85vh;
+  left: 85vw;
 }
 
 .parent {
@@ -117,6 +123,22 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+.listBox {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center;
+  align-content: center; */
+  width: 85vw;
+}
+
+.listItem{
+  display: flex;
+  flex-direction: row;
+  padding: .5rem;
+  margin: .7rem;
 }
 
 @media (max-width: 600px) {
