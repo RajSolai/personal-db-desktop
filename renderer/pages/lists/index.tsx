@@ -37,11 +37,12 @@ const Lists: React.FC<any> = () => {
 
   const addTask = (task: string) => {
     const temp: ListItemType = {
-      id: "", //TODO: add random string here
+      id: "-", //TODO: add random string here
       task: task,
       checked: false,
     };
     setList([temp, ...list]);
+    setTaskTxt("");
   };
 
   return (
@@ -59,7 +60,7 @@ const Lists: React.FC<any> = () => {
         <h1>{"dbName"}</h1>
         <div className={styles.inputWrapper}>
           <TextField
-            id="standard-basic"
+            id="addTaskField"
             value={taskText}
             label="Add Task"
             onChange={(e) => setTaskTxt(e.target.value)}
@@ -67,6 +68,7 @@ const Lists: React.FC<any> = () => {
           &nbsp; &nbsp; &nbsp;
           <Button
             variant="contained"
+            id="addBtn"
             color="primary"
             onClick={() => addTask(taskText)}
           >
