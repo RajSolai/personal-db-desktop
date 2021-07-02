@@ -17,11 +17,18 @@ import { useState, useEffect } from "react";
 
 const Lists: React.FC<any> = () => {
   const [dbName, setDbName] = useState<string>("");
+  const [dbDesc, setDbDesc] = useState<string>("");
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
   const [completedList, setCompleted] = useState<ListItemType[]>([]);
 
   useEffect(() => {
+    let currentDbString = localStorage.getItem("currentdb");
+    let dbDetails = JSON.parse(currentDbString == null ? "" : currentDbString);
+    const { dbname, dbdesc, dbendpoint } = dbDetails;
+    setDbName(dbname);
+    setDbDesc(dbdesc);
+    //! Remove on Production
     setList([
       { id: "id-1", task: "some task", checked: false },
       { id: "id-2", task: "some another task", checked: false },
@@ -29,11 +36,25 @@ const Lists: React.FC<any> = () => {
   }, []);
 
   const handleCompleteChange = (e: any) => {
-    let thetask = list.find((item) => item.id == e.target.value);
-    const remaining = list.filter((item) => item.id != e.target.value);
-    setList(remaining);
-    thetask!.checked = true;
-    setCompleted([thetask!, ...completedList]);
+    if (!e.target.checked) {
+      console.log("true");
+      // re add to list from checked list
+      let thetask = completedList.find((item) => item.id == e.target.value);
+          console.log(thetask);
+
+      const remaining = completedList.filter((item) => item.id != e.target.value);
+      setCompleted(remaining);
+      thetask!.checked = false;
+      setList([thetask!, ...list]);
+    } else {
+      console.log("false");
+      // add to checked list
+      let thetask = list.find((item) => item.id == e.target.value);
+      const remaining = list.filter((item) => item.id != e.target.value);
+      setList(remaining);
+      thetask!.checked = true;
+      setCompleted([thetask!, ...completedList]);
+    }
   };
 
   const addTask = (task: string) => {
@@ -58,7 +79,8 @@ const Lists: React.FC<any> = () => {
           </Link>
           <Typography color="textPrimary">{dbName}</Typography>
         </Breadcrumbs>
-        <h1>{"dbName"}</h1>
+        <h1>{dbName}</h1>
+        <p>{dbDesc}</p>
         <div className={styles.inputWrapper}>
           <TextField
             id="addTaskField"
@@ -97,6 +119,7 @@ const Lists: React.FC<any> = () => {
                 icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                 checkedIcon={<CheckBoxIcon fontSize="small" />}
                 name="isTaskCompleted"
+                value={item.id}
                 checked={item.checked}
                 onChange={handleCompleteChange}
               />
