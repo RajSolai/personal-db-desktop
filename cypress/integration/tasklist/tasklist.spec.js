@@ -6,4 +6,9 @@ describe("Testing Task Page", () => {
       cy.get("#addBtn").click();
     }
   });
+  it("Remove from List", () => {
+    for (let i = 0; i <= 5; i++) {
+      cy.get("#rmTask").click();
+    }
+  });
 });

@@ -2,6 +2,7 @@ import Head from "next/head";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs/Breadcrumbs";
 import Typography from "@material-ui/core/Typography/Typography";
 import Link from "@material-ui/core/Link/Link";
+import { nanoid } from "nanoid";
 import { Paper } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
@@ -37,7 +38,7 @@ const Lists: React.FC<any> = () => {
 
   const addTask = (task: string) => {
     const temp: ListItemType = {
-      id: "-", //TODO: add random string here
+      id: nanoid(8),
       task: task,
       checked: false,
     };
@@ -83,6 +84,7 @@ const Lists: React.FC<any> = () => {
                 checkedIcon={<CheckBoxIcon fontSize="small" />}
                 name="isTaskCompleted"
                 value={item.id}
+                id="rmTask" //!INFO: testing purpose
                 checked={false}
                 onChange={handleCompleteChange}
               />
