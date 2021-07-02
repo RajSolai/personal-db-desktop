@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import axios from "axios/dist/axios";
-import Paper  from "@material-ui/core/Paper/Paper";
+import Paper from "@material-ui/core/Paper/Paper";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
@@ -23,7 +23,7 @@ const Pmgmt: React.FC<any> = () => {
   const [progress, setProgress] = useState<string[]>([]);
   const [completed, setCompleted] = useState<string[]>([]);
   const [taskText, setTaskText] = useState<string>("");
-  const [dbDesc,setDesc] = useState<string>("");
+  const [dbDesc, setDesc] = useState<string>("");
   const [dbEndPt, setDbEndPt] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -32,14 +32,14 @@ const Pmgmt: React.FC<any> = () => {
     let dbDetails = JSON.parse(currentDbString == null ? "" : currentDbString);
     const { dbname, dbdesc, dbendpoint } = dbDetails;
     setDesc(dbdesc);
+    setDbEndPt(dbendpoint);
+    setDbName(dbname);
     axios
       .get<ProjectDataBase>(
         `https://fast-savannah-26464.herokuapp.com/database/${dbendpoint}`
       )
       .then((res) => {
         console.dir(res.data);
-        setDbEndPt(dbendpoint);
-        setDbName(dbname);
         setNotStarted(res.data.body.notStarted);
         setProgress(res.data.body.progress);
         setCompleted(res.data.body.completed);
@@ -144,7 +144,7 @@ const Pmgmt: React.FC<any> = () => {
   return (
     <>
       <Head>
-      <title>{dbName}</title>
+        <title>{dbName}</title>
       </Head>
       <div className={styles.wrapper}>
         <Breadcrumbs aria-label="breadcrumb">
@@ -178,7 +178,7 @@ const Pmgmt: React.FC<any> = () => {
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2 className={styles.nstart} >Not Started</h2>
+            <h2 className={styles.nstart}>Not Started</h2>
             {isLoading ? (
               <p>loading</p>
             ) : (
