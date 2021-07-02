@@ -2,12 +2,13 @@ import Head from "next/head";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs/Breadcrumbs";
 import Typography from "@material-ui/core/Typography/Typography";
 import Link from "@material-ui/core/Link/Link";
+import axios from "axios/dist/axios";
 import { nanoid } from "nanoid";
 import { Paper } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import { ListItemType } from "../../interfaces/props";
+import { ListDataType, ListItemType } from "../../interfaces/props";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import Save from "@material-ui/icons/Save";
 import Fab from "@material-ui/core/Fab/Fab";
@@ -17,6 +18,7 @@ import { useState, useEffect } from "react";
 
 const Lists: React.FC<any> = () => {
   const [dbName, setDbName] = useState<string>("");
+  const [dbEndPt, setEndPt] = useState<string>("");
   const [dbDesc, setDbDesc] = useState<string>("");
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
@@ -28,6 +30,7 @@ const Lists: React.FC<any> = () => {
     const { dbname, dbdesc, dbendpoint } = dbDetails;
     setDbName(dbname);
     setDbDesc(dbdesc);
+    setEndPt(dbendpoint);
     //! Remove on Production
     setList([
       { id: "id-1", task: "some task", checked: false },
@@ -35,19 +38,29 @@ const Lists: React.FC<any> = () => {
     ]);
   }, []);
 
+  const saveData = async () => {
+    const data = {
+      todoList: list,
+      completedList: completedList,
+    };
+    console.dir(data);
+    await axios.put(
+      `https://fast-savannah-26464.herokuapp.com/project/${dbEndPt}`,
+      data
+    );
+  };
+
   const handleCompleteChange = (e: any) => {
     if (!e.target.checked) {
-      console.log("true");
       // re add to list from checked list
       let thetask = completedList.find((item) => item.id == e.target.value);
-          console.log(thetask);
-
-      const remaining = completedList.filter((item) => item.id != e.target.value);
+      const remaining = completedList.filter(
+        (item) => item.id != e.target.value
+      );
       setCompleted(remaining);
       thetask!.checked = false;
       setList([thetask!, ...list]);
     } else {
-      console.log("false");
       // add to checked list
       let thetask = list.find((item) => item.id == e.target.value);
       const remaining = list.filter((item) => item.id != e.target.value);

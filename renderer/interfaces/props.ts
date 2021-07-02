@@ -22,3 +22,14 @@ export interface ListItemType {
   id: string;
   task: string;
 }
+
+export interface ListDataType {
+  id: string;
+  name: string;
+  description: string;
+  type: string;
+  body: {
+    todoList: ListItemType[];
+    completedList: ListItemType[];
+  };
+}
