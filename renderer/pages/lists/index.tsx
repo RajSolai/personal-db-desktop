@@ -20,6 +20,7 @@ const Lists: React.FC<any> = () => {
   const [dbName, setDbName] = useState<string>("");
   const [dbEndPt, setEndPt] = useState<string>("");
   const [dbDesc, setDbDesc] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
   const [completedList, setCompleted] = useState<ListItemType[]>([]);
@@ -31,11 +32,16 @@ const Lists: React.FC<any> = () => {
     setDbName(dbname);
     setDbDesc(dbdesc);
     setEndPt(dbendpoint);
-    //! Remove on Production
-    setList([
-      { id: "id-1", task: "some task", checked: false },
-      { id: "id-2", task: "some another task", checked: false },
-    ]);
+    axios
+      .get<ListDataType>(
+        `https://fast-savannah-26464.herokuapp.com/database/${dbendpoint}`
+      )
+      .then((res) => {
+        console.dir(res.data);
+        setList(res.data.body.todoList);
+        setCompleted(res.data.body.completedList);
+      });
+    setLoading(false);
   }, []);
 
   const saveData = async () => {
@@ -45,7 +51,7 @@ const Lists: React.FC<any> = () => {
     };
     console.dir(data);
     await axios.put(
-      `https://fast-savannah-26464.herokuapp.com/project/${dbEndPt}`,
+      `https://fast-savannah-26464.herokuapp.com/list/${dbEndPt}`,
       data
     );
   };
@@ -112,35 +118,43 @@ const Lists: React.FC<any> = () => {
           </Button>
         </div>
         <ul className={styles.listBox}>
-          {list.map((item, key) => (
-            <Paper className={styles.listItem} key={key}>
-              <Checkbox
-                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                checkedIcon={<CheckBoxIcon fontSize="small" />}
-                name="isTaskCompleted"
-                value={item.id}
-                id="rmTask" //!INFO: testing purpose
-                checked={false}
-                onChange={handleCompleteChange}
-              />
-              <p>{item.task}</p>
-            </Paper>
-          ))}
-          {completedList.map((item, key) => (
-            <Paper className={styles.listItem} key={key}>
-              <Checkbox
-                icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                checkedIcon={<CheckBoxIcon fontSize="small" />}
-                name="isTaskCompleted"
-                value={item.id}
-                checked={item.checked}
-                onChange={handleCompleteChange}
-              />
-              <p>
-                <del>{item.task}</del>
-              </p>
-            </Paper>
-          ))}
+          {loading ? (
+            <p>loading</p>
+          ) : (
+            list.map((item, key) => (
+              <Paper className={styles.listItem} key={key}>
+                <Checkbox
+                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                  checkedIcon={<CheckBoxIcon fontSize="small" />}
+                  name="isTaskCompleted"
+                  value={item.id}
+                  id="rmTask" //!INFO: testing purpose
+                  checked={false}
+                  onChange={handleCompleteChange}
+                />
+                <p>{item.task}</p>
+              </Paper>
+            ))
+          )}
+          {loading ? (
+            <div></div>
+          ) : (
+            completedList.map((item, key) => (
+              <Paper className={styles.listItem} key={key}>
+                <Checkbox
+                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                  checkedIcon={<CheckBoxIcon fontSize="small" />}
+                  name="isTaskCompleted"
+                  value={item.id}
+                  checked={item.checked}
+                  onChange={handleCompleteChange}
+                />
+                <p>
+                  <del>{item.task}</del>
+                </p>
+              </Paper>
+            ))
+          )}
         </ul>
       </div>
       <Fab

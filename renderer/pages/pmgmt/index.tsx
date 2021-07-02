@@ -34,7 +34,7 @@ const Pmgmt: React.FC<any> = () => {
     setDesc(dbdesc);
     axios
       .get<ProjectDataBase>(
-        `https://fast-savannah-26464.herokuapp.com/project/${dbendpoint}`
+        `https://fast-savannah-26464.herokuapp.com/database/${dbendpoint}`
       )
       .then((res) => {
         console.dir(res.data);

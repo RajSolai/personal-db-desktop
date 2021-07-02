@@ -81,8 +81,11 @@ export default function Home() {
     }; //TODO: to implement
     localStorage.setItem("currentdb", JSON.stringify(currentDb));
     if (dbType == "project") {
-      router.push("/lists"); //TODO: remove after
-      // router.push("/pmgmt");
+      router.push("/pmgmt");
+    } else if (dbType == "list") {
+      router.push("/lists");
+    } else {
+      router.push("/");
     }
   };
   return (
