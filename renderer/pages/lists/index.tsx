@@ -11,6 +11,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { ListDataType, ListItemType } from "../../interfaces/props";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import Save from "@material-ui/icons/Save";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import Close from "@material-ui/icons/Close";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import Fab from "@material-ui/core/Fab/Fab";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import styles from "../../styles/Home.module.css";
@@ -23,6 +26,7 @@ const Lists: React.FC<any> = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
   const [completedList, setCompleted] = useState<ListItemType[]>([]);
 
   useEffect(() => {
@@ -50,10 +54,13 @@ const Lists: React.FC<any> = () => {
       completedList: completedList,
     };
     console.dir(data);
-    await axios.put(
+    const result = await axios.put(
       `https://fast-savannah-26464.herokuapp.com/list/${dbEndPt}`,
       data
     );
+    if (result.status == 200) {
+      setOpen(true);
+    }
   };
 
   const handleCompleteChange = (e: any) => {
@@ -76,7 +83,7 @@ const Lists: React.FC<any> = () => {
     }
   };
 
-  const addTask = (task: string) => {
+  const addTask = async (task: string) => {
     const temp: ListItemType = {
       id: nanoid(8),
       task: task,
@@ -157,11 +164,29 @@ const Lists: React.FC<any> = () => {
           )}
         </ul>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message="Changes Saved Successfully 🎉️"
+        action={
+          <>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={() => setOpen(false)}
+            >
+              <Close />
+            </IconButton>
+          </>
+        }
+      />
       <Fab
         color="primary"
         aria-label="add"
         className={styles.fab}
-        onClick={() => console.log("useless")} //TODO: implement save
+        onClick={() => saveData()} //TODO: implement save
       >
         <Save />
       </Fab>
