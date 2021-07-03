@@ -34,25 +34,15 @@
 .parent {
   display: flex;
   flex-direction: row;
-  /* width: 80vw; */
   justify-content: space-around;
-  align-items: center;
-  align-content: center;
-  justify-self: center;
 }
 .holder {
   display: flex;
   padding: 1rem;
   width: 30rem;
+  min-height: 60vh;
   margin: 0.5rem;
   flex-direction: column;
-  height: 75vh;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.holder::-webkit-scrollbar {
-  display: none;
 }
 .card {
   padding: 1rem;
