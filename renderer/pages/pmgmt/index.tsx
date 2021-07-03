@@ -166,7 +166,10 @@ const Pmgmt: React.FC<any> = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => addToNotStarted(taskText)}
+            onClick={() => {
+              addToNotStarted(taskText);
+              setTaskText("");
+            }}
           >
             Add Task
           </Button>
