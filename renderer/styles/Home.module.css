@@ -95,8 +95,8 @@
 .projectCard:hover,
 .projectCard:focus,
 .projectCard:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #6200ee;
+  border-color: #6200ee;
 }
 
 .projectCard h2 {
