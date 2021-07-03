@@ -177,8 +177,10 @@ export default function Home() {
             }}
           >
             <option value={"project"}>Project</option>
-            <option value={"table"}>Table (comming soon)</option>
-            <option value={"list"}>Lists (comming soon)</option>
+            <option value={"list"}>Lists</option>
+            <option value={"table"} disabled>
+              Table (comming soon)
+            </option>
           </Select>
         </DialogContent>
         <DialogActions>
