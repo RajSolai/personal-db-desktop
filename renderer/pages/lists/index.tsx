@@ -38,7 +38,12 @@ const Lists: React.FC<any> = () => {
     setEndPt(dbendpoint);
     axios
       .get<ListDataType>(
-        `https://fast-savannah-26464.herokuapp.com/database/${dbendpoint}`
+        `https://fast-savannah-26464.herokuapp.com/database/${dbendpoint}`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
       )
       .then((res) => {
         console.dir(res.data);
@@ -56,7 +61,12 @@ const Lists: React.FC<any> = () => {
     console.dir(data);
     const result = await axios.put(
       `https://fast-savannah-26464.herokuapp.com/list/${dbEndPt}`,
-      data
+      data,
+      {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
     );
     if (result.status == 200) {
       setOpen(true);
