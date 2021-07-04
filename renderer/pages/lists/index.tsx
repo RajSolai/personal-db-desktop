@@ -110,7 +110,7 @@ const Lists: React.FC<any> = () => {
       </Head>
       <div className={styles.wrapper}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/">
+          <Link color="inherit" href="/dbs">
             Home
           </Link>
           <Typography color="textPrimary">{dbName}</Typography>
