@@ -15,7 +15,7 @@ import Fab from "@material-ui/core/Fab/Fab";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
-import { ProjectDataBase } from "../interfaces/props";
+import { ProjectDataBase } from "../../interfaces/props";
 import Close from "@material-ui/icons/Close";
 import AddRounded from "@material-ui/icons/AddRounded";
 

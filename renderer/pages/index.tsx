@@ -17,7 +17,7 @@ const App = () => {
       .then((res) => {
         console.log(res.data.token);
         localStorage.setItem("token", res.data.token);
-        router.replace("/dbs");
+        router.push("/dbs");
       })
       .catch((e) => console.error(e));
   };
