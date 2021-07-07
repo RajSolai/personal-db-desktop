@@ -1,6 +1,6 @@
 import { TextField } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-import Close from "@material-ui/icons/Close";
+import LockOpen from "@material-ui/icons/LockOpen";
 import axios from "axios/dist/axios";
 import router from "next/router";
 import styles from "../styles/Home.module.css";
@@ -38,7 +38,7 @@ const App = () => {
             color="inherit"
             onClick={() => login()}
           >
-            <Close />
+            <LockOpen />
           </IconButton>
         </div>
       </section>
