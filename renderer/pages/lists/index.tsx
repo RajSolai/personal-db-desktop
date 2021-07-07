@@ -163,7 +163,7 @@ const Lists: React.FC<any> = () => {
                   checkedIcon={<CheckBoxIcon fontSize="small" />}
                   name="isTaskCompleted"
                   value={item.id}
-                  checked={item.checked}
+                  checked={true}
                   onChange={handleCompleteChange}
                 />
                 <p>
