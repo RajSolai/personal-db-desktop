@@ -5,6 +5,11 @@ export interface CardProps {
   onDelete: any;
 }
 
+export interface ProjectTask{
+  id: string;
+  task: string;
+}
+
 export interface ProjectDataBase {
   id: string;
   name: string;

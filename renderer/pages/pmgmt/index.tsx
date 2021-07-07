@@ -14,14 +14,15 @@ import TaskCard from "../../components/taskcard";
 import styles from "../../styles/Home.module.css";
 import Save from "@material-ui/icons/Save";
 import Close from "@material-ui/icons/Close";
-import { ProjectDataBase } from "../../interfaces/props";
+import { ProjectDataBase, ProjectTask } from "../../interfaces/props";
+import { nanoid } from "nanoid";
 
 const Pmgmt: React.FC<any> = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [dbName, setDbName] = useState<string>("");
-  const [notStarted, setNotStarted] = useState<string[]>([]);
-  const [progress, setProgress] = useState<string[]>([]);
-  const [completed, setCompleted] = useState<string[]>([]);
+  const [notStarted, setNotStarted] = useState<ProjectTask[]>([]);
+  const [progress, setProgress] = useState<ProjectTask[]>([]);
+  const [completed, setCompleted] = useState<ProjectTask[]>([]);
   const [taskText, setTaskText] = useState<string>("");
   const [dbDesc, setDesc] = useState<string>("");
   const [dbEndPt, setDbEndPt] = useState<string>("");
@@ -55,64 +56,73 @@ const Pmgmt: React.FC<any> = () => {
   const onCardDrop = (e: any) => {
     e.preventDefault();
     let data = e.dataTransfer.getData("text");
+    let id = e.dataTransfer.getData("id");
+    let theTask: ProjectTask = {
+      id: id,
+      task: data,
+    };
     let parentData = e.dataTransfer.getData("parent");
+    console.log(parentData);
     // if the parent and target are same
     if (e.target.id == parentData) {
       return;
     }
     // add sequence
     if (e.target.id == "complete") {
-      addToCompleted(data);
+      addToCompleted(theTask);
     }
     if (e.target.id == "nstart") {
-      addToNotStarted(data);
+      addToNotStarted(theTask);
     }
     if (e.target.id == "prog") {
-      addToProgress(data);
+      addToProgress(theTask);
     }
     // delete sequence
     if (parentData == "nstart") {
-      removeFromNotStarted(data);
+      removeFromNotStarted(id);
     }
     if (parentData == "prog") {
-      removeFromProgress(data);
+      removeFromProgress(id);
     }
     if (parentData == "complete") {
-      removeFromCompleted(data);
+      removeFromCompleted(id);
     }
   };
   const allowDrop = (e: any) => {
     e.preventDefault();
   };
   const onCardDrag = (e: any) => {
-    e.dataTransfer.setData("text", e.target.id);
+    let [taskId,taskName] = e.target.id.toString().split(":");
+    e.dataTransfer.setData("id", taskId);
+    e.dataTransfer.setData("text", taskName);
     e.dataTransfer.setData("parent", e.target.parentNode.id);
+    console.log(taskName);
   };
-  const addToCompleted = (task: string) => {
+  const addToCompleted = (task: ProjectTask) => {
     let temp = completed;
     temp = [...completed, task];
     setCompleted(temp);
   };
-  const addToProgress = (task: string) => {
+  const addToProgress = (task: ProjectTask) => {
     let temp = progress;
     temp = [...progress, task];
     setProgress(temp);
   };
-  const addToNotStarted = (task: string) => {
+  const addToNotStarted = (task: ProjectTask) => {
     let temp = notStarted;
     temp = [...notStarted, task];
     setNotStarted(temp);
   };
-  const removeFromNotStarted = (task: string) => {
-    let temp = notStarted.filter((e) => e != task);
+  const removeFromNotStarted = (taskId:String) => {
+    let temp = notStarted.filter((e) => e.id != taskId);
     setNotStarted(temp);
   };
-  const removeFromProgress = (task: string) => {
-    let temp = progress.filter((e) => e != task);
+  const removeFromProgress = (taskId:String) => {
+    let temp = progress.filter((e) => e.id != taskId);
     setProgress(temp);
   };
-  const removeFromCompleted = (task: string) => {
-    let temp = completed.filter((e) => e != task);
+  const removeFromCompleted = (taskId:String) => {
+    let temp = completed.filter((e) => e.id != taskId);
     setCompleted(temp);
   };
   const saveData = async () => {
@@ -135,16 +145,16 @@ const Pmgmt: React.FC<any> = () => {
       setOpen(true);
     }
   };
-  const removeTask = (id: string) => {
-    let element: any = document.getElementById(id);
+  const removeTask = (task: ProjectTask) => {
+    let element: any = document.getElementById(`${task.id}:${task.task}`);
     if (element.parentNode.id == "nstart") {
-      removeFromNotStarted(id);
+      removeFromNotStarted(task.id);
     }
     if (element.parentNode.id == "prog") {
-      removeFromProgress(id);
+      removeFromProgress(task.id);
     }
     if (element.parentNode.id == "complete") {
-      removeFromCompleted(id);
+      removeFromCompleted(task.id);
     }
   };
   const HandleClose = () => {
@@ -177,7 +187,11 @@ const Pmgmt: React.FC<any> = () => {
             variant="contained"
             color="primary"
             onClick={() => {
-              addToNotStarted(taskText);
+              let newTask: ProjectTask = {
+                id: nanoid(8),
+                task: taskText,
+              };
+              addToNotStarted(newTask);
               setTaskText("");
             }}
           >
@@ -198,10 +212,10 @@ const Pmgmt: React.FC<any> = () => {
               notStarted.map((data, key) => (
                 <TaskCard
                   key={key}
-                  id={data}
+                  id={`${data.id}:${data.task}`}
                   onDrag={onCardDrag}
                   onDelete={() => removeTask(data)}
-                  taskName={data}
+                  taskName={data.task}
                 />
               ))
             )}
@@ -219,11 +233,11 @@ const Pmgmt: React.FC<any> = () => {
             ) : (
               progress.map((data, key) => (
                 <TaskCard
-                  id={data}
                   key={key}
+                  id={`${data.id}:${data.task}`}
                   onDrag={onCardDrag}
                   onDelete={() => removeTask(data)}
-                  taskName={data}
+                  taskName={data.task}
                 />
               ))
             )}
@@ -242,10 +256,10 @@ const Pmgmt: React.FC<any> = () => {
               completed.map((data, key) => (
                 <TaskCard
                   key={key}
-                  id={data}
+                  id={`${data.id}:${data.task}`}
                   onDrag={onCardDrag}
                   onDelete={() => removeTask(data)}
-                  taskName={data}
+                  taskName={data.task}
                 />
               ))
             )}

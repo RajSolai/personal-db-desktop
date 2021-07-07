@@ -82,7 +82,7 @@ export default function Home() {
       dbname: dbName,
       dbdesc: dbDesc,
       dbendpoint: dbId,
-    }; //TODO: to implement
+    };
     localStorage.setItem("currentdb", JSON.stringify(currentDb));
     if (dbType == "project") {
       router.push("/pmgmt");
