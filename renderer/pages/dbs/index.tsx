@@ -64,6 +64,11 @@ export default function Home() {
     };
     const res = await axios.post(
       `https://fast-savannah-26464.herokuapp.com/${type}`,
+      {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      },
       data
     );
     if (res.status == 200) {
