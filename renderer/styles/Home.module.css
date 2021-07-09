@@ -1,4 +1,4 @@
-.body::-webkit-scrollbar {
+/* .body::-webkit-scrollbar {
   display: none;
 }
 
@@ -75,10 +75,10 @@
   display: flex;
   /* align-items: center;
   justify-content: center; */
-  flex-wrap: wrap;
+  /* flex-wrap: wrap;
   max-width: 80vw;
   margin-top: 2rem;
-}
+} */
 
 .projectCard {
   margin: 1rem;

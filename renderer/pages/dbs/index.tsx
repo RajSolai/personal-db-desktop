@@ -103,17 +103,17 @@ export default function Home() {
       <Head>
         <title>Personal Database</title>
       </Head>
-      <div className={styles.wrapper}>
-        <h1 className={styles.title}>Select Database</h1>
+      <div className="m-2">
+        <h1 className="text-3xl font-bold text-white">Select Database</h1>
         {isLoading ? (
           <div>
             <p>Loading</p>
           </div>
         ) : (
-          <div className={styles.grid}>
+          <div className="m-1 flex flex-row flex-wrap">
             {databases.map((database, key) => (
-              <Card
-                className={styles.projectCard}
+              <div
+                className="m-1 p-2 border-2 rounded-md transition duration-200 w-2/5"
                 key={key}
                 onClick={() =>
                   NavigatePages(
@@ -124,9 +124,9 @@ export default function Home() {
                   )
                 }
               >
-                <h2>{database.name}</h2>
-                <p>{database.description}</p>
-              </Card>
+                <h2 className="m-1 text-xl text-white">{database.name}</h2>
+                <p className="m-1 text-base text-white">{database.description}</p>
+              </div>
             ))}
           </div>
         )}

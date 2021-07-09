@@ -23,23 +23,19 @@ const App = () => {
   };
   return (
     <>
-      <section className={styles.loginSection}>
-        <div className={styles.loginDivision}>
-          <TextField
-            label="Enter Code to Login"
+      <section className="flex flex-column justify-center items-center content-center full">
+        <div className="flex flex-row justify-center items-center content-center">
+          <input
+            className="flex p-3 border-transparent rounded-md shadow-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-800"
+            type="text"
             value={passcode}
             onChange={(e) => setPass(e.target.value)}
             id="usrtoken"
           />
           &nbsp;&nbsp;&nbsp;
-          <IconButton
-            size="medium"
-            aria-label="close"
-            color="inherit"
-            onClick={() => login()}
-          >
+          <button className="p-3 m-1 shadow-md rounded-xl bg-purple-600 transition duration-200 focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50 hover:bg-purple-700"  onClick={() => login()}>
             <LockOpen />
-          </IconButton>
+          </button>
         </div>
       </section>
     </>
