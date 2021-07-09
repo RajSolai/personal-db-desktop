@@ -113,7 +113,7 @@ export default function Home() {
           <div className="m-1 flex flex-row flex-wrap">
             {databases.map((database, key) => (
               <div
-                className="m-1 p-2 border-2 rounded-md transition duration-200 w-2/5"
+                className="m-4 p-2 border-2 text-white rounded-md transition duration-200 w-1/6 hover:border-purple-600 hover:text-purple-600"
                 key={key}
                 onClick={() =>
                   NavigatePages(
@@ -124,8 +124,8 @@ export default function Home() {
                   )
                 }
               >
-                <h2 className="m-1 text-xl text-white">{database.name}</h2>
-                <p className="m-1 text-base text-white">{database.description}</p>
+                <h2 className="m-1 font-bold text-xl">{database.name}</h2>
+                <p className="m-1 text-base">{database.description}</p>
               </div>
             ))}
           </div>
