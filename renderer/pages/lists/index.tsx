@@ -9,20 +9,22 @@ import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import { ListDataType, ListItemType } from "../../interfaces/props";
+import BreadCrumb from "../../components/breadcrumb";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import Save from "@material-ui/icons/Save";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Close from "@material-ui/icons/Close";
-import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import Fab from "@material-ui/core/Fab/Fab";
+import SnackBar from "../../components/snackbar";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import styles from "../../styles/Home.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Lists: React.FC<any> = () => {
   const [dbName, setDbName] = useState<string>("");
   const [dbEndPt, setEndPt] = useState<string>("");
   const [dbDesc, setDbDesc] = useState<string>("");
+  const snackBarRef = useRef();
   const [loading, setLoading] = useState<boolean>(true);
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
@@ -108,99 +110,84 @@ const Lists: React.FC<any> = () => {
       <Head>
         <title>{dbName}</title>
       </Head>
-      <div className={styles.wrapper}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="dbs">
-            Home
-          </Link>
-          <Typography color="textPrimary">{dbName}</Typography>
-        </Breadcrumbs>
-        <h1>{dbName}</h1>
-        <p>{dbDesc}</p>
-        <div className={styles.inputWrapper}>
-          <TextField
+      <div className="m-5">
+        <BreadCrumb to="dbs" dbName={dbName} />
+        <h1 className="m-1 text-white font-bold text-3xl">{dbName}</h1>
+        <p className="m-1 text-white text-base">{dbDesc}</p>
+        <div className="flex justify-center item-center content-center">
+          <input
+            className="flex p-2 border-transparent rounded-md shadow-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-800"
+            type="text"
             id="addTaskField"
             value={taskText}
-            label="Add Task"
+            placeholder="Enter new task"
             onChange={(e) => setTaskTxt(e.target.value)}
           />
           &nbsp; &nbsp; &nbsp;
-          <Button
-            variant="contained"
+          <button
+            className="p-3 m-1 shadow-md rounded-md text-white bg-purple-600 transition duration-200 focus:ring focus:ring-purple-600 focus:ring-opacity-50 hover:bg-purple-700"
             id="addBtn"
             color="primary"
             onClick={() => addTask(taskText)}
           >
             Add Task
-          </Button>
+          </button>
         </div>
-        <ul className={styles.listBox}>
+        <ul className="mx-20 justify-center content-center">
           {loading ? (
             <p>loading</p>
           ) : (
             list.map((item, key) => (
-              <Paper className={styles.listItem} key={key}>
-                <Checkbox
-                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                  checkedIcon={<CheckBoxIcon fontSize="small" />}
+              <div
+                className="flex flex-row p-3 m-3 items-center bg-gray-700 rounded-md shadow-md"
+                key={key}
+              >
+                <input
+                  className="mr-3 checked:bg-blue-600 checked:border-transparent"
+                  type="checkbox"
                   name="isTaskCompleted"
                   value={item.id}
                   id="rmTask" //!INFO: testing purpose
                   checked={false}
                   onChange={handleCompleteChange}
                 />
-                <p>{item.task}</p>
-              </Paper>
+                <p className="text-white">{item.task}</p>
+              </div>
             ))
           )}
           {loading ? (
             <div></div>
           ) : (
             completedList.map((item, key) => (
-              <Paper className={styles.listItem} key={key}>
-                <Checkbox
-                  icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-                  checkedIcon={<CheckBoxIcon fontSize="small" />}
+              <div
+                className="flex flex-row p-3 m-3 items-center bg-gray-700 rounded-md shadow-md"
+                key={key}
+              >
+                <input
+                  className="mr-3 checked:bg-purple-600 checked:border-transparent"
+                  type="checkbox"
                   name="isTaskCompleted"
                   value={item.id}
                   checked={true}
                   onChange={handleCompleteChange}
                 />
-                <p>
+                <p className="text-white">
                   <del>{item.task}</del>
                 </p>
-              </Paper>
+              </div>
             ))
           )}
         </ul>
       </div>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={() => setOpen(false)}
-        message="Changes Saved Successfully 🎉️"
-        action={
-          <>
-            <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={() => setOpen(false)}
-            >
-              <Close />
-            </IconButton>
-          </>
-        }
-      />
-      <Fab
-        color="primary"
+      <SnackBar isOpen={open} onClose={() => setOpen(false)} />
+      <button
         id="saveBtn"
         aria-label="add"
-        className={styles.fab}
-        onClick={() => saveData()} //TODO: implement save
+        className="flex p-3 bg-purple-600 transition rounded-md shadow-lg fab text-white hover:bg-purple-700 hover:rotate-45"
+        onClick={() => saveData()}
       >
         <Save />
-      </Fab>
+      </button>
     </>
   );
 };

@@ -113,7 +113,7 @@ export default function Home() {
           <div className="m-1 flex flex-row flex-wrap">
             {databases.map((database, key) => (
               <div
-                className="m-4 p-2 border-2 text-white rounded-md transition duration-200 w-1/6 hover:border-purple-600 hover:text-purple-600"
+                className="m-4 p-2 border-2 text-white rounded-lg transition duration-200 w-1/6 hover:border-purple-600 hover:text-purple-600"
                 key={key}
                 onClick={() =>
                   NavigatePages(
@@ -131,85 +131,15 @@ export default function Home() {
           </div>
         )}
       </div>
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackOpen(false)}
-        message="Created New Database Successfully 🎉️"
-        action={
-          <>
-            <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={() => setSnackOpen(false)}
-            >
-              <Close />
-            </IconButton>
-          </>
-        }
-      />
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Create New Database</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Enter details to add new Database.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            onChange={(e) => setName(e.target.value)}
-            label="Name"
-            type="text"
-            fullWidth
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="desc"
-            onChange={(e) => setDesc(e.target.value)}
-            label="Description"
-            type="text"
-            fullWidth
-          />
-          <Select
-            native
-            value={type}
-            onChange={handleTypeChange}
-            inputProps={{
-              name: "type",
-              id: "select-type",
-            }}
-          >
-            <option value={"project"}>Project</option>
-            <option value={"list"}>Lists</option>
-            <option value={"table"} disabled>
-              Table (comming soon)
-            </option>
-          </Select>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={AddProject} color="primary">
-            Create
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Fab
+
+      <button
         color="primary"
         aria-label="add"
-        className={styles.fab}
+        className="flex p-3 bg-purple-600 transition rounded-md shadow-lg fab text-white hover:bg-purple-700 hover:rotate-45"
         onClick={() => setOpen(true)}
       >
         <AddRounded />
-      </Fab>
+      </button>
     </>
   );
 }

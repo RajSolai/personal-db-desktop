@@ -2,15 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background-color: #111827;
+body {
+  background-color: #111827;
 }
 
-.full{
-    height: 100vh;
-    width: 100vw;
+.full {
+  height: 100vh;
+  width: 100vw;
 }
 
-.rounded{
-    border-radius: 50%;
+.fab {
+  position: fixed !important;
+  top: 85vh;
+  left: 93vw;
+}
+
+.snackbar{
+	position: fixed !important;
+	top: 80vh;
+	left: 40vw;
+}
+
+.holder{
+  width: 30rem;
+  min-height: 60vh;
+}
+
+.rounded {
+  border-radius: 50%;
 }

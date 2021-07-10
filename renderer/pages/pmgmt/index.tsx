@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+// import Link from "next/link";
 import axios from "axios/dist/axios";
 import Paper from "@material-ui/core/Paper/Paper";
 import IconButton from "@material-ui/core/IconButton/IconButton";
@@ -7,10 +8,11 @@ import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
 import Fab from "@material-ui/core/Fab/Fab";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import SnackBar from "../../components/snackbar";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs/Breadcrumbs";
-import Link from "@material-ui/core/Link/Link";
 import Typography from "@material-ui/core/Typography/Typography";
 import TaskCard from "../../components/taskcard";
+import BreadCrumb from "../../components/breadcrumb";
 import styles from "../../styles/Home.module.css";
 import Save from "@material-ui/icons/Save";
 import Close from "@material-ui/icons/Close";
@@ -92,7 +94,7 @@ const Pmgmt: React.FC<any> = () => {
     e.preventDefault();
   };
   const onCardDrag = (e: any) => {
-    let [taskId,taskName] = e.target.id.toString().split(":");
+    let [taskId, taskName] = e.target.id.toString().split(":");
     e.dataTransfer.setData("id", taskId);
     e.dataTransfer.setData("text", taskName);
     e.dataTransfer.setData("parent", e.target.parentNode.id);
@@ -113,15 +115,15 @@ const Pmgmt: React.FC<any> = () => {
     temp = [...notStarted, task];
     setNotStarted(temp);
   };
-  const removeFromNotStarted = (taskId:String) => {
+  const removeFromNotStarted = (taskId: String) => {
     let temp = notStarted.filter((e) => e.id != taskId);
     setNotStarted(temp);
   };
-  const removeFromProgress = (taskId:String) => {
+  const removeFromProgress = (taskId: String) => {
     let temp = progress.filter((e) => e.id != taskId);
     setProgress(temp);
   };
-  const removeFromCompleted = (taskId:String) => {
+  const removeFromCompleted = (taskId: String) => {
     let temp = completed.filter((e) => e.id != taskId);
     setCompleted(temp);
   };
@@ -157,35 +159,28 @@ const Pmgmt: React.FC<any> = () => {
       removeFromCompleted(task.id);
     }
   };
-  const HandleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <>
       <Head>
         <title>{dbName}</title>
       </Head>
-      <div className={styles.wrapper}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="dbs">
-            Home
-          </Link>
-          <Typography color="textPrimary">{dbName}</Typography>
-        </Breadcrumbs>
-        <h1>Project {dbName}</h1>
-        <span>{dbDesc}</span>
-        <div className={styles.inputWrapper}>
-          <TextField
+      <div className="m-5">
+        <BreadCrumb to="dbs" dbName={dbName} />
+        <h1 className="m-1 text-white font-bold text-3xl">Project {dbName}</h1>
+        <p className="m-1 text-white text-base">{dbDesc}</p>
+        <div className="flex justify-center item-center content-center">
+          <input
+            className="flex p-2 border-transparent rounded-md shadow-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-800"
+            type="text"
             id="standard-basic"
             value={taskText}
-            label="Add Task"
+            placeholder="Enter new task"
             onChange={(e) => setTaskText(e.target.value)}
           />
           &nbsp; &nbsp; &nbsp;
-          <Button
-            variant="contained"
-            color="primary"
+          <button
+            className="p-3 m-1 shadow-md rounded-md text-white bg-purple-600 transition duration-200 focus:ring focus:ring-purple-600 focus:ring-opacity-50 hover:bg-purple-700"
             onClick={() => {
               let newTask: ProjectTask = {
                 id: nanoid(8),
@@ -196,16 +191,16 @@ const Pmgmt: React.FC<any> = () => {
             }}
           >
             Add Task
-          </Button>
+          </button>
         </div>
-        <div className={styles.parent}>
-          <Paper
+        <div className="flex mt-5 flex-row content-around">
+          <div
             id="nstart"
-            className={styles.holder}
+            className="flex rounded-md flex-col bg-gray-800 holder p-2 m-2"
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2 className={styles.nstart}>Not Started</h2>
+            <h2 className="font-bold text-red-300 text-lg">Not Started</h2>
             {isLoading ? (
               <p>loading</p>
             ) : (
@@ -219,14 +214,14 @@ const Pmgmt: React.FC<any> = () => {
                 />
               ))
             )}
-          </Paper>
-          <Paper
+          </div>
+          <div
+            className="flex rounded-md flex-col bg-gray-800 holder p-2 m-2"
             id="prog"
-            className={styles.holder}
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2 className={styles.progress}>In Progress</h2>
+            <h2 className="font-bold text-yellow-300 text-lg">In Progress</h2>
 
             {isLoading ? (
               <p>loading</p>
@@ -241,14 +236,14 @@ const Pmgmt: React.FC<any> = () => {
                 />
               ))
             )}
-          </Paper>
-          <Paper
+          </div>
+          <div
             id="complete"
-            className={styles.holder}
+            className="flex flex-col rounded-md bg-gray-800 holder p-2 m-2"
             onDrop={onCardDrop}
             onDragOver={allowDrop}
           >
-            <h2 className={styles.completed}>Completed</h2>
+            <h2 className="font-bold text-green-300 text-lg">Completed</h2>
 
             {isLoading ? (
               <p>loading</p>
@@ -263,34 +258,17 @@ const Pmgmt: React.FC<any> = () => {
                 />
               ))
             )}
-          </Paper>
+          </div>
         </div>
-        <Snackbar
-          open={open}
-          autoHideDuration={3000}
-          onClose={HandleClose}
-          message="Changes Saved Successfully 🎉️"
-          action={
-            <>
-              <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={HandleClose}
-              >
-                <Close />
-              </IconButton>
-            </>
-          }
-        />
-        <Fab
-          color="primary"
+        <SnackBar isOpen={open} onClose={() => setOpen(false)} />
+        <button
+          id="saveBtn"
           aria-label="add"
-          className={styles.fab}
+          className="flex p-3 bg-purple-600 transition rounded-md shadow-lg fab text-white hover:bg-purple-700 hover:rotate-45 focus:ring-2 ring-purple-400"
           onClick={saveData}
         >
           <Save />
-        </Fab>
+        </button>
       </div>
     </>
   );
