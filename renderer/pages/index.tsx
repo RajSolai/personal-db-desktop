@@ -1,9 +1,6 @@
-import { TextField } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
 import LockOpen from "@material-ui/icons/LockOpen";
 import axios from "axios/dist/axios";
 import router from "next/router";
-import styles from "../styles/Home.module.css";
 import { useState } from "react";
 
 const App = () => {

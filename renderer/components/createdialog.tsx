@@ -33,10 +33,8 @@ const CreateDialog: React.FC<any> = ({
           onChange={onTypeChange}
           id="selectDbType"
         >
-          <option className="bg-grey-800" value="list">
-            List
-          </option>
           <option value="project">Project</option>
+          <option value="list">List</option>
         </select>
         <div className="flex flex-row text-white justify-end items-center">
           <button

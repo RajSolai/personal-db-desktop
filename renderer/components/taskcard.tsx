@@ -1,7 +1,4 @@
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import Card from "@material-ui/core/Card/Card";
 import Delete from "@material-ui/icons/Delete";
-import styles from "../styles/Home.module.css";
 import { CardProps } from "../interfaces/props";
 
 const TaskCard: React.FC<any> = (props: CardProps) => {
@@ -13,7 +10,11 @@ const TaskCard: React.FC<any> = (props: CardProps) => {
       onDragStart={props.onDrag}
     >
       <p>{props.taskName}</p>
-      <button aria-label="delete" className="p-1 hover:bg-purple-600 rounded-md focus:ring ring-purple-800" onClick={props.onDelete}>
+      <button
+        aria-label="delete"
+        className="p-1 hover:bg-purple-600 rounded-md focus:ring ring-purple-800"
+        onClick={props.onDelete}
+      >
         <Delete />
       </button>
     </div>

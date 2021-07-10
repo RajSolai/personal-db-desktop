@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-// import Link from "next/link";
 import axios from "axios/dist/axios";
-import Paper from "@material-ui/core/Paper/Paper";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import TextField from "@material-ui/core/TextField/TextField";
-import Button from "@material-ui/core/Button/Button";
-import Fab from "@material-ui/core/Fab/Fab";
-import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import SnackBar from "../../components/snackbar";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs/Breadcrumbs";
-import Typography from "@material-ui/core/Typography/Typography";
 import TaskCard from "../../components/taskcard";
 import BreadCrumb from "../../components/breadcrumb";
-import styles from "../../styles/Home.module.css";
 import Save from "@material-ui/icons/Save";
-import Close from "@material-ui/icons/Close";
 import { ProjectDataBase, ProjectTask } from "../../interfaces/props";
 import { nanoid } from "nanoid";
 
@@ -260,7 +249,7 @@ const Pmgmt: React.FC<any> = () => {
             )}
           </div>
         </div>
-        <SnackBar isOpen={open} onClose={() => setOpen(false)} />
+        <SnackBar isOpen={open} content="Changes Saved Successfully 🎉️" onClose={() => setOpen(false)} />
         <button
           id="saveBtn"
           aria-label="add"

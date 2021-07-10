@@ -1,30 +1,16 @@
 import Head from "next/head";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs/Breadcrumbs";
-import Typography from "@material-ui/core/Typography/Typography";
-import Link from "@material-ui/core/Link/Link";
 import axios from "axios/dist/axios";
 import { nanoid } from "nanoid";
-import { Paper } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField/TextField";
-import Button from "@material-ui/core/Button/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 import { ListDataType, ListItemType } from "../../interfaces/props";
 import BreadCrumb from "../../components/breadcrumb";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import Save from "@material-ui/icons/Save";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import Close from "@material-ui/icons/Close";
-import Fab from "@material-ui/core/Fab/Fab";
 import SnackBar from "../../components/snackbar";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import styles from "../../styles/Home.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const Lists: React.FC<any> = () => {
   const [dbName, setDbName] = useState<string>("");
   const [dbEndPt, setEndPt] = useState<string>("");
   const [dbDesc, setDbDesc] = useState<string>("");
-  const snackBarRef = useRef();
   const [loading, setLoading] = useState<boolean>(true);
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
@@ -179,7 +165,11 @@ const Lists: React.FC<any> = () => {
           )}
         </ul>
       </div>
-      <SnackBar isOpen={open} onClose={() => setOpen(false)} />
+      <SnackBar
+        isOpen={open}
+        content="Changes Saved Successfully 🎉️"
+        onClose={() => setOpen(false)}
+      />
       <button
         id="saveBtn"
         aria-label="add"

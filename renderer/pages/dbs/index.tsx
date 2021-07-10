@@ -1,23 +1,10 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import axios from "axios/dist/axios";
-import Dialog from "@material-ui/core/Dialog/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Select from "@material-ui/core/Select/Select";
-import Card from "@material-ui/core/Card/Card";
-import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import TextField from "@material-ui/core/TextField/TextField";
-import Button from "@material-ui/core/Button/Button";
-import Fab from "@material-ui/core/Fab/Fab";
-import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import { useRouter } from "next/router";
 import CreateDialog from "../../components/createdialog";
-import styles from "../../styles/Home.module.css";
+import SnackBar from "../../components/snackbar";
 import { ProjectDataBase } from "../../interfaces/props";
-import Close from "@material-ui/icons/Close";
 import AddRounded from "@material-ui/icons/AddRounded";
 
 export default function Home() {
@@ -29,18 +16,6 @@ export default function Home() {
   const [type, setType] = useState<string>("project");
   const [databases, setDataBases] = useState<ProjectDataBase[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleTypeChange = (e: any) => {
-    setType(e.target.value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const getData = async () => {
     const res = await axios.get("https://fast-savannah-26464.herokuapp.com/", {
@@ -56,7 +31,7 @@ export default function Home() {
     getData();
   }, []);
 
-  const AddProject = async () => {
+  const addProject = async () => {
     setOpen(false);
     const data = {
       name: name,
@@ -137,8 +112,13 @@ export default function Home() {
         onNameChange={(e) => setName(e.target.value)}
         onDescChange={(e) => setDesc(e.target.value)}
         onTypeChange={(e) => setType(e.target.value)}
-        onAddBtnClick={() => console.log(name, desc, type)}
+        onAddBtnClick={() => addProject()}
         onCancelBtnClick={() => setOpen(false)}
+      />
+      <SnackBar
+        isOpen={snackOpen}
+        content="Database Created Successfully"
+        onClose={() => setSnackOpen(false)}
       />
       <button
         color="primary"
