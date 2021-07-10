@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button/Button";
 import Fab from "@material-ui/core/Fab/Fab";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import { useRouter } from "next/router";
+import CreateDialog from "../../components/createdialog";
 import styles from "../../styles/Home.module.css";
 import { ProjectDataBase } from "../../interfaces/props";
 import Close from "@material-ui/icons/Close";
@@ -95,7 +96,7 @@ export default function Home() {
     } else if (dbType == "list") {
       router.push("/lists");
     } else {
-      router.push("/");
+      router.push("/dbs");
     }
   };
   return (
@@ -131,7 +132,14 @@ export default function Home() {
           </div>
         )}
       </div>
-
+      <CreateDialog
+        isOpen={open}
+        onNameChange={(e) => setName(e.target.value)}
+        onDescChange={(e) => setDesc(e.target.value)}
+        onTypeChange={(e) => setType(e.target.value)}
+        onAddBtnClick={() => console.log(name, desc, type)}
+        onCancelBtnClick={() => setOpen(false)}
+      />
       <button
         color="primary"
         aria-label="add"

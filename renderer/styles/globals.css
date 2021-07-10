@@ -28,6 +28,12 @@ body {
   min-height: 60vh;
 }
 
+.dialog{
+  position: fixed !important;
+	top: 30vh;
+	left: 40vw;
+}
+
 .rounded {
   border-radius: 50%;
 }
