@@ -29,6 +29,7 @@ const App = () => {
             className="flex p-3 border-transparent rounded-md shadow-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-800"
             type="text"
             value={passcode}
+            placeholder="Enter Pass Code"
             onChange={(e) => setPass(e.target.value)}
             id="usrtoken"
           />

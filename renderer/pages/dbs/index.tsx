@@ -104,17 +104,17 @@ export default function Home() {
       <Head>
         <title>Personal Database</title>
       </Head>
-      <div className="m-2">
+      <div className="m-3">
         <h1 className="text-3xl font-bold text-white">Select Database</h1>
         {isLoading ? (
           <div>
             <p>Loading</p>
           </div>
         ) : (
-          <div className="m-1 flex flex-row flex-wrap">
+          <div className="m-1 mt-7 flex flex-row flex-wrap">
             {databases.map((database, key) => (
               <div
-                className="m-4 p-2 border-2 text-white rounded-lg transition duration-200 w-1/6 hover:border-purple-600 hover:text-purple-600"
+                className="m-4 p-2 border-2 text-white rounded-lg select-none transition duration-200 w-1/5 hover:border-purple-600 hover:text-purple-600"
                 key={key}
                 onClick={() =>
                   NavigatePages(
