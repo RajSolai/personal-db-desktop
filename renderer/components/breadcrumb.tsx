@@ -1,10 +1,13 @@
-const BreadCrumb: React.FC<any> = ({to,dbName}) => {
+import { useRouter } from "next/router";
+
+const BreadCrumb: React.FC<any> = ({ to, dbName }) => {
+  const router = useRouter();
   return (
     <>
       <div className="flex flex-row text-white">
-        <a className="hover:text-purple-600" href={`/${to}`}>
+        <p className="hover:text-purple-600" onClick={() => router.back()}>
           Home
-        </a>
+        </p>
         <p>&nbsp;/&nbsp;{dbName}</p>
       </div>
     </>
