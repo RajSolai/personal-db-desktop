@@ -1,6 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import Save from "@material-ui/icons/Save";
+import SnackBar from "../../components/snackbar";
 
-const Notes: React.FC<any> = (props: any) => {
+const Notes: React.FC<any> = () => {
+  const [open, setOpen] = useState<boolean>(false);
   const parentRef = useRef<any>();
   let keyword: String = "";
   const onSlashPress = (event) => {
@@ -14,6 +17,12 @@ const Notes: React.FC<any> = (props: any) => {
         const node: HTMLHeadingElement = document.createElement("h1");
         node.className = "block text-2xl font-bold";
         const textNode = document.createTextNode("New H1 Title");
+        node.appendChild(textNode);
+        parentRef.current.appendChild(node);
+      } else if (keyword.trim() === "li/") {
+        const node: HTMLLIElement = document.createElement("li");
+        node.className = "block";
+        const textNode = document.createTextNode("👉️ Add List Item");
         node.appendChild(textNode);
         parentRef.current.appendChild(node);
       } else if (keyword.trim() === "h2/") {
@@ -36,7 +45,7 @@ const Notes: React.FC<any> = (props: any) => {
         divNode.appendChild(paraNode);
         parentRef.current.appendChild(divNode);
       } else {
-        console.log("fuck");
+        console.log("nothing works");
       }
       console.log(keyword);
       keyword = "";
@@ -44,7 +53,7 @@ const Notes: React.FC<any> = (props: any) => {
   };
   return (
     <>
-      <div className="m-5">
+      <div className="m-8">
         <div
           ref={parentRef}
           contentEditable
@@ -52,8 +61,21 @@ const Notes: React.FC<any> = (props: any) => {
           className="text-white"
         >
           <h1 className="block text-2xl font-bold">Untitled</h1>
-          add notes here
+          Add notes here
         </div>
+        <SnackBar
+          isOpen={open}
+          content="Changes Saved Successfully 🎉️"
+          onClose={() => setOpen(false)}
+        />
+        <button
+          id="saveBtn"
+          aria-label="add"
+          className="flex p-3 bg-purple-600 transition rounded-md shadow-lg fab text-white hover:bg-purple-700 hover:rotate-45 focus:ring-2 ring-purple-400"
+          onClick={() => console.log("sdf")}
+        >
+          <Save />
+        </button>
       </div>
     </>
   );
