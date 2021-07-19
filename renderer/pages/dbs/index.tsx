@@ -18,7 +18,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const getData = async () => {
-    const res = await axios.get("https://fast-savannah-26464.herokuapp.com/", {
+    const res = await axios.get("https://pdb-api.eu-gb.cf.appdomain.cloud/", {
       headers: {
         "auth-token": localStorage.getItem("token"),
       },
@@ -39,7 +39,7 @@ export default function Home() {
       desc: desc,
     };
     const res = await axios.post(
-      `https://fast-savannah-26464.herokuapp.com/${type}`,
+      `https://pdb-api.eu-gb.cf.appdomain.cloud/${type}`,
       data,
       {
         headers: {

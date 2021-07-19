@@ -5,7 +5,11 @@ directories:
   output: dist
   buildResources: resources
 linux:
-  target: 'AppImage'
+  synopsis: Personal Database
+  icon: ./resources/icon.png
+  description: Personal Database
+  category: Utility
+  target: 'deb'
 asar: true
 files:
   - from: .

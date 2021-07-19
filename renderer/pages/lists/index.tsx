@@ -26,7 +26,7 @@ const Lists: React.FC<any> = () => {
     setEndPt(dbendpoint);
     axios
       .get<ListDataType>(
-        `https://fast-savannah-26464.herokuapp.com/database/${dbendpoint}`,
+        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbendpoint}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -48,7 +48,7 @@ const Lists: React.FC<any> = () => {
     };
     console.dir(data);
     const result = await axios.put(
-      `https://fast-savannah-26464.herokuapp.com/list/${dbEndPt}`,
+      `https://pdb-api.eu-gb.cf.appdomain.cloud/list/${dbEndPt}`,
       data,
       {
         headers: {

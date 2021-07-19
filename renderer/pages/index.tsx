@@ -10,7 +10,7 @@ const App = () => {
       passcode: passcode,
     };
     await axios
-      .post("https://fast-savannah-26464.herokuapp.com/login", cred)
+      .post("https://pdb-api.eu-gb.cf.appdomain.cloud/login", cred)
       .then((res) => {
         console.log(res.data.token);
         localStorage.setItem("token", res.data.token);
