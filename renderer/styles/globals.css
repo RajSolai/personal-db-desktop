@@ -12,6 +12,13 @@ body {
   background-color: #111827;
 }
 
+button{
+  outline: none;
+}
+button:hover{
+  outline: none;
+}
+
 .full {
   height: 100vh;
   width: 100vw;
@@ -26,7 +33,7 @@ body {
 .snackbar {
   position: fixed !important;
   top: 80vh;
-  left: 40vw;
+  left: 38vw;
 }
 
 .holder {

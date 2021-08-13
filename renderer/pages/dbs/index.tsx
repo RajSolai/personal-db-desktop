@@ -70,6 +70,8 @@ export default function Home() {
       router.push("/pmgmt");
     } else if (dbType == "list") {
       router.push("/lists");
+    } else if (dbType == "notes") {
+      router.push("/notes");
     } else {
       router.push("/dbs");
     }

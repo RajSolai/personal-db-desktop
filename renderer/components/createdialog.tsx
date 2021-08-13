@@ -35,6 +35,7 @@ const CreateDialog: React.FC<any> = ({
         >
           <option value="project">Project</option>
           <option value="list">List</option>
+          <option value="notes">Notes</option>
         </select>
         <div className="flex flex-row text-white justify-end items-center">
           <button
