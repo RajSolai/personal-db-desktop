@@ -6,8 +6,8 @@ This application is made for my own specific usage.
 
 ### Sister Projects
 
-[Backend Project]()
-[Flutter Mobile App]()
+[Backend Project](https://github.com/RajSolai/personal-database-api)
+[Flutter Mobile App](https://github.com/RajSolai/pdb_flutter)
 
 ### Why we Need a Personal Database
 
