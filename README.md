@@ -1,8 +1,13 @@
 
-## Personal Database
+# Personal Database or PDB
 
 Manage and Maintain a personal Database.
 This application is made for my own specific usage.
+
+### Sister Projects
+
+[Backend Project]()
+[Flutter Mobile App]()
 
 ### Why we Need a Personal Database
 
@@ -10,7 +15,7 @@ This application is made for my own specific usage.
 
 - Project Management
 
-- Just to keep track of Life 💌️
+- Todos and Checklists
 
 [Read More about this by Derek Sivers](https://sive.rs/dbt)
 
@@ -20,4 +25,10 @@ Kalle Hallden's Video on "Why You Need a Database"
 
 ### Screenshots
 
-![Project Management Page](https://github.com/RajSolai/personal-db-desktop/raw/master/docs/screenshot.png)
+![Project Management Page](https://github.com/RajSolai/personal-db-desktop/raw/master/docs/mainpage.png)
+
+![Project Management Page](https://github.com/RajSolai/personal-db-desktop/raw/master/docs/make.png)
+
+![Project Management Page](https://github.com/RajSolai/personal-db-desktop/raw/master/docs/project.png)
+
+![Project Management Page](https://github.com/RajSolai/personal-db-desktop/raw/master/docs/checklist.png)
