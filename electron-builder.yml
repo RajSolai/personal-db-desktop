@@ -4,6 +4,16 @@ copyright: Copyright © 2021 Solai Raj
 directories:
   output: dist
   buildResources: resources
+# Windows configuration
+win:
+  icon: "./resources/icon.png"
+  target:
+    - "zip"
+    - "nsis"
+# Config for the windows installer
+nsis:
+  oneClick: true
+  perMachine: true
 linux:
   synopsis: Personal Database
   icon: ./resources/icon.png

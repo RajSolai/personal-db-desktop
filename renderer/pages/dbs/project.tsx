@@ -5,30 +5,22 @@ import SnackBar from "../../components/snackbar";
 import TaskCard from "../../components/taskcard";
 import BreadCrumb from "../../components/breadcrumb";
 import Save from "@material-ui/icons/Save";
+import Public from "@material-ui/icons/Public";
 import { ProjectDataBase, ProjectTask } from "../../interfaces/props";
 import { nanoid } from "nanoid";
 
-const Pmgmt: React.FC<any> = () => {
+const Project: React.FC<any> = ({ dbName, dbEndPt, dbDesc }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [dbName, setDbName] = useState<string>("");
   const [notStarted, setNotStarted] = useState<ProjectTask[]>([]);
   const [progress, setProgress] = useState<ProjectTask[]>([]);
   const [completed, setCompleted] = useState<ProjectTask[]>([]);
   const [taskText, setTaskText] = useState<string>("");
-  const [dbDesc, setDesc] = useState<string>("");
-  const [dbEndPt, setDbEndPt] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    let currentDbString = localStorage.getItem("currentdb");
-    let dbDetails = JSON.parse(currentDbString == null ? "" : currentDbString);
-    const { dbname, dbdesc, dbendpoint } = dbDetails;
-    setDesc(dbdesc);
-    setDbEndPt(dbendpoint);
-    setDbName(dbname);
     axios
       .get<ProjectDataBase>(
-        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbendpoint}`,
+        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbEndPt}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -42,7 +34,7 @@ const Pmgmt: React.FC<any> = () => {
         setCompleted(res.data.body.completed);
       });
     setLoading(false);
-  }, []);
+  }, [dbEndPt]);
 
   const onCardDrop = (e: any) => {
     e.preventDefault();
@@ -149,6 +141,10 @@ const Pmgmt: React.FC<any> = () => {
     }
   };
 
+  const makePublic = async () => {
+    alert("Opps, Alpha Build, feature not implemented for now :(");
+  };
+
   return (
     <>
       <Head>
@@ -156,8 +152,15 @@ const Pmgmt: React.FC<any> = () => {
       </Head>
       <div className="m-5">
         <BreadCrumb to="dbs" dbName={dbName} />
-        <h1 className="m-1 text-white font-bold text-3xl">Project {dbName}</h1>
+        <h1 className="m-1 text-white font-bold text-3xl">Project {dbName} </h1>
         <p className="m-1 text-white text-base">{dbDesc}</p>
+        <span
+          className="inline-flex items-center bg-purple-500 p-0.5 rounded-md cursor-pointer font-sm"
+          onClick={makePublic}
+        >
+          <Public fontSize="small" />
+          &nbsp;make public
+        </span>
         <div className="flex justify-center item-center content-center">
           <input
             className="flex p-2 border-transparent rounded-md shadow-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-600 bg-gray-800"
@@ -169,7 +172,7 @@ const Pmgmt: React.FC<any> = () => {
           />
           &nbsp; &nbsp; &nbsp;
           <button
-            className="p-3 m-1 shadow-md rounded-md text-white bg-purple-600 transition duration-200 focus:ring focus:ring-purple-600 focus:ring-opacity-50 hover:bg-purple-700"
+            className="p-3 m-1 shadow-md rounded-md text-white bg-gradient-to-b from-purple-800 via-violet-900 to-purple-800"
             onClick={() => {
               let newTask: ProjectTask = {
                 id: nanoid(8),
@@ -249,7 +252,11 @@ const Pmgmt: React.FC<any> = () => {
             )}
           </div>
         </div>
-        <SnackBar isOpen={open} content="Changes Saved Successfully 🎉️" onClose={() => setOpen(false)} />
+        <SnackBar
+          isOpen={open}
+          content="Changes Saved Successfully 🎉️"
+          onClose={() => setOpen(false)}
+        />
         <button
           id="saveBtn"
           aria-label="add"
@@ -263,4 +270,4 @@ const Pmgmt: React.FC<any> = () => {
   );
 };
 
-export default Pmgmt;
+export default Project;

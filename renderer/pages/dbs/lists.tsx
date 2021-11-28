@@ -1,16 +1,12 @@
-import Head from "next/head";
 import axios from "axios/dist/axios";
 import { nanoid } from "nanoid";
 import { ListDataType, ListItemType } from "../../interfaces/props";
-import BreadCrumb from "../../components/breadcrumb";
 import Save from "@material-ui/icons/Save";
 import SnackBar from "../../components/snackbar";
 import { useState, useEffect } from "react";
+import ListTask from "../../components/listTask";
 
-const Lists: React.FC<any> = () => {
-  const [dbName, setDbName] = useState<string>("");
-  const [dbEndPt, setEndPt] = useState<string>("");
-  const [dbDesc, setDbDesc] = useState<string>("");
+export default function Lists({ dbName, dbEndPt, dbDesc }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [taskText, setTaskTxt] = useState<string>("");
   const [list, setList] = useState<ListItemType[]>([]);
@@ -18,15 +14,9 @@ const Lists: React.FC<any> = () => {
   const [completedList, setCompleted] = useState<ListItemType[]>([]);
 
   useEffect(() => {
-    let currentDbString = localStorage.getItem("currentdb");
-    let dbDetails = JSON.parse(currentDbString == null ? "" : currentDbString);
-    const { dbname, dbdesc, dbendpoint } = dbDetails;
-    setDbName(dbname);
-    setDbDesc(dbdesc);
-    setEndPt(dbendpoint);
     axios
       .get<ListDataType>(
-        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbendpoint}`,
+        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbEndPt}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -39,7 +29,7 @@ const Lists: React.FC<any> = () => {
         setCompleted(res.data.body.completedList);
       });
     setLoading(false);
-  }, []);
+  }, [dbEndPt]);
 
   const saveData = async () => {
     const data = {
@@ -93,11 +83,7 @@ const Lists: React.FC<any> = () => {
 
   return (
     <>
-      <Head>
-        <title>{dbName}</title>
-      </Head>
       <div className="m-5">
-        <BreadCrumb to="dbs" dbName={dbName} />
         <h1 className="m-1 text-white font-bold text-3xl">{dbName}</h1>
         <p className="m-1 text-white text-base">{dbDesc}</p>
         <div className="flex justify-center item-center content-center">
@@ -111,7 +97,7 @@ const Lists: React.FC<any> = () => {
           />
           &nbsp; &nbsp; &nbsp;
           <button
-            className="p-3 m-1 shadow-md rounded-md text-white bg-purple-600 transition duration-200 focus:ring focus:ring-purple-600 focus:ring-opacity-50 hover:bg-purple-700"
+            className="p-3 m-1 shadow-md rounded-md text-white bg-gradient-to-b from-purple-800 via-violet-900 to-purple-800"
             id="addBtn"
             color="primary"
             onClick={() => addTask(taskText)}
@@ -121,46 +107,27 @@ const Lists: React.FC<any> = () => {
         </div>
         <ul className="mx-20 justify-center content-center">
           {loading ? (
-            <p>loading</p>
+            <p>Loading</p>
           ) : (
             list.map((item, key) => (
-              <div
-                className="flex flex-row p-3 m-3 items-center bg-gray-700 rounded-md shadow-md"
+              <ListTask
                 key={key}
-              >
-                <input
-                  className="mr-3 checked:bg-blue-600 checked:border-transparent"
-                  type="checkbox"
-                  name="isTaskCompleted"
-                  value={item.id}
-                  id="rmTask" //!INFO: testing purpose
-                  checked={false}
-                  onChange={handleCompleteChange}
-                />
-                <p className="text-white">{item.task}</p>
-              </div>
+                isChecked={false}
+                item={item}
+                handleCompleteChange={handleCompleteChange}
+              />
             ))
           )}
           {loading ? (
-            <div></div>
+            <div>Loading</div>
           ) : (
             completedList.map((item, key) => (
-              <div
-                className="flex flex-row p-3 m-3 items-center bg-gray-700 rounded-md shadow-md"
+              <ListTask
                 key={key}
-              >
-                <input
-                  className="mr-3 checked:bg-purple-600 checked:border-transparent"
-                  type="checkbox"
-                  name="isTaskCompleted"
-                  value={item.id}
-                  checked={true}
-                  onChange={handleCompleteChange}
-                />
-                <p className="text-white">
-                  <del>{item.task}</del>
-                </p>
-              </div>
+                isChecked={true}
+                item={item}
+                handleCompleteChange={handleCompleteChange}
+              />
             ))
           )}
         </ul>
@@ -180,6 +147,4 @@ const Lists: React.FC<any> = () => {
       </button>
     </>
   );
-};
-
-export default Lists;
+}

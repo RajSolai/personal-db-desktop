@@ -12,10 +12,10 @@ body {
   background-color: #111827;
 }
 
-button{
+button {
   outline: none;
 }
-button:hover{
+button:hover {
   outline: none;
 }
 
@@ -49,4 +49,37 @@ button:hover{
 
 .rounded {
   border-radius: 50%;
+}
+
+.side-bar {
+  width: 30vw;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.content-view {
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.modal-wrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+ 
+.custom-scroll::-webkit-scrollbar-track {
+  background: #4B5563;
+}
+ 
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #7C3AED; 
 }

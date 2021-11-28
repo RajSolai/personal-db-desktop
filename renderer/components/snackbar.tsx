@@ -4,7 +4,7 @@ const SnackBar: React.FC<any> = ({ isOpen, onClose, content }) => {
   return (
     <div
       style={{ visibility: isOpen ? "visible" : "hidden" }}
-      className="flex p-2 rounded-md items-center justify-center snackbar bg-gray-300"
+      className="flex p-2 rounded-md items-center justify-center snackbar bg-pink-600"
     >
       <p>{content} </p>
       &nbsp;&nbsp;

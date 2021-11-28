@@ -5,22 +5,15 @@ import BreadCrumb from "../../components/breadcrumb";
 import Save from "@material-ui/icons/Save";
 import SnackBar from "../../components/snackbar";
 
-const Notes: React.FC<any> = () => {
+const Notes: React.FC<any> = ({ dbName, dbEndPt }) => {
   const editorRef = useRef<any>(null);
-  const [dbName, setDbName] = useState<string>("Database");
-  const [dbEndPt, setEndPt] = useState<string>("");
   const [content, setContent] = useState<string>("<p>Loading.....</p>");
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    let currentDbString = localStorage.getItem("currentdb");
-    let dbDetails = JSON.parse(currentDbString == null ? "" : currentDbString);
-    const { dbname, dbendpoint } = dbDetails;
-    setDbName(dbname);
-    setEndPt(dbendpoint);
     axios
       .get<any>(
-        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbendpoint}`,
+        `https://pdb-api.eu-gb.cf.appdomain.cloud/database/${dbEndPt}`,
         {
           headers: {
             "auth-token": localStorage.getItem("token"),
@@ -30,10 +23,8 @@ const Notes: React.FC<any> = () => {
       .then((res) => {
         console.dir(res.data);
         setContent(res.data.content);
-        // setList(res.data.body.todoList);
-        // setCompleted(res.data.body.completedList);
       });
-  }, []);
+  }, [dbEndPt]);
   const saveData = async () => {
     const data = {
       notesContent: editorRef.current.getContent(),
@@ -55,7 +46,6 @@ const Notes: React.FC<any> = () => {
   return (
     <>
       <div className="m-3">
-        <BreadCrumb to="dbs" dbName={dbName} />
         <h1 className="m-1 text-white font-bold text-3xl">{dbName}</h1>
         <Editor
           apiKey="agzgtq7qkh7q3bvkt9uwl0z9s5i2b9a3es4svjrstw2kf26g"

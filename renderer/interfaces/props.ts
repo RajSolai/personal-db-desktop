@@ -5,7 +5,7 @@ export interface CardProps {
   onDelete: any;
 }
 
-export interface ProjectTask{
+export interface ProjectTask {
   id: string;
   task: string;
 }
@@ -37,4 +37,10 @@ export interface ListDataType {
     todoList: ListItemType[];
     completedList: ListItemType[];
   };
+}
+
+export interface db {
+  dbname: string;
+  dbdesc: string;
+  dbendpoint: string;
 }

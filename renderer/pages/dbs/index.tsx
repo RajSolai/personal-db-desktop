@@ -1,14 +1,23 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import axios from "axios/dist/axios";
-import { useRouter } from "next/router";
+import Lists from "./lists";
+import { Player } from "@lottiefiles/react-lottie-player";
 import CreateDialog from "../../components/createdialog";
+import Delete from "@material-ui/icons/Delete";
 import SnackBar from "../../components/snackbar";
-import { ProjectDataBase } from "../../interfaces/props";
+import { db, ProjectDataBase } from "../../interfaces/props";
 import AddRounded from "@material-ui/icons/AddRounded";
+import Notes from "./notes";
+import Project from "./project";
 
 export default function Home() {
-  const router = useRouter();
+  const [currentType, setCurrType] = useState("");
+  const [currentDb, setCurrDb] = useState<db>({
+    dbname: "dbName",
+    dbdesc: "dbDesc",
+    dbendpoint: "dbId",
+  });
   const [open, setOpen] = useState<boolean>(false);
   const [snackOpen, setSnackOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
@@ -30,6 +39,16 @@ export default function Home() {
   useEffect(() => {
     getData();
   }, []);
+
+  const removeProject = (id) => {
+    axios
+      .delete(`https://pdb-api.eu-gb.cf.appdomain.cloud/database/${id}`, {
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      })
+      .then(() => getData());
+  };
 
   const addProject = async () => {
     setOpen(false);
@@ -54,7 +73,7 @@ export default function Home() {
     }
   };
 
-  const NavigatePages = (
+  const changeView = (
     dbDesc: string,
     dbType: string,
     dbName: string,
@@ -65,71 +84,124 @@ export default function Home() {
       dbdesc: dbDesc,
       dbendpoint: dbId,
     };
-    localStorage.setItem("currentdb", JSON.stringify(currentDb));
-    if (dbType == "project") {
-      router.push("/pmgmt");
-    } else if (dbType == "list") {
-      router.push("/lists");
-    } else if (dbType == "notes") {
-      router.push("/notes");
-    } else {
-      router.push("/dbs");
-    }
+    console.log("clicked");
+    setCurrDb(currentDb);
+    setCurrType(dbType);
   };
-  return (
-    <>
-      <Head>
-        <title>Personal Database</title>
-      </Head>
-      <div className="m-3">
-        <h1 className="text-3xl font-bold text-white">Select Database</h1>
-        {isLoading ? (
+
+  if (isLoading) {
+    return (
+      <>
+        <Head>
+          <title>Loading</title>
+        </Head>
+        <div className="flex align-center mt-12 items-center justify-center">
           <div>
-            <p>Loading</p>
+            <Player
+              autoplay
+              loop
+              src="https://assets10.lottiefiles.com/packages/lf20_F7WfWB.json"
+            ></Player>
           </div>
-        ) : (
-          <div className="m-1 mt-7 flex flex-row flex-wrap">
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Head>
+          <title>Personal Database</title>
+        </Head>
+        <div className="flex flex-row">
+          <div className="m-0 p-2 flex flex-col side-bar custom-scroll bg-gray-800">
+            <button
+              color="primary"
+              aria-label="add"
+              className="flex p-3 mb-3 rounded-md text-white bg-gradient-to-b from-purple-800 via-violet-900 to-purple-800"
+              onClick={() => setOpen(true)}
+            >
+              <AddRounded />
+              &nbsp;
+              <span>Create New</span>
+            </button>
             {databases.map((database, key) => (
               <div
-                className="m-4 p-2 border-2 text-white rounded-lg select-none transition duration-200 w-1/5 hover:border-purple-600 hover:text-purple-600"
+                className="mb-2 p-1 text-white rounded-md flex justify-between bg-gray-700"
                 key={key}
-                onClick={() =>
-                  NavigatePages(
-                    database.description,
-                    database.type,
-                    database.name,
-                    database.id
-                  )
-                }
               >
-                <h2 className="m-1 font-bold text-xl">{database.name}</h2>
-                <p className="m-1 text-base">{database.description}</p>
+                <h2
+                  className="m-1 font-bold text-xl cursor-pointer"
+                  onClick={() =>
+                    changeView(
+                      database.description,
+                      database.type,
+                      database.name,
+                      database.id
+                    )
+                  }
+                >
+                  {database.name}
+                </h2>
+                <button
+                  aria-label="delete"
+                  className="p-1 hover:bg-purple-600 rounded-md focus:ring ring-purple-800"
+                  onClick={() => removeProject(database.id)}
+                >
+                  <Delete />
+                </button>
               </div>
             ))}
           </div>
-        )}
-      </div>
-      <CreateDialog
-        isOpen={open}
-        onNameChange={(e) => setName(e.target.value)}
-        onDescChange={(e) => setDesc(e.target.value)}
-        onTypeChange={(e) => setType(e.target.value)}
-        onAddBtnClick={() => addProject()}
-        onCancelBtnClick={() => setOpen(false)}
-      />
-      <SnackBar
-        isOpen={snackOpen}
-        content="Database Created Successfully"
-        onClose={() => setSnackOpen(false)}
-      />
-      <button
-        color="primary"
-        aria-label="add"
-        className="flex p-3 bg-purple-600 transition rounded-md shadow-lg fab text-white hover:bg-purple-700 hover:rotate-45"
-        onClick={() => setOpen(true)}
-      >
-        <AddRounded />
-      </button>
-    </>
-  );
+          <div className="content-view text-white custom-scroll">
+            {currentType == "notes" ? (
+              <Notes
+                dbEndPt={currentDb!.dbendpoint}
+                dbName={currentDb!.dbname}
+              />
+            ) : currentType == "list" ? (
+              <Lists
+                dbDesc={currentDb!.dbdesc}
+                dbEndPt={currentDb!.dbendpoint}
+                dbName={currentDb!.dbname}
+              />
+            ) : currentType == "project" ? (
+              <Project
+                dbDesc={currentDb!.dbdesc}
+                dbEndPt={currentDb!.dbendpoint}
+                dbName={currentDb!.dbname}
+              />
+            ) : (
+              // animation
+              <div className="flex align-center mt-12 items-center justify-center">
+                <div>
+                  <Player
+                    autoplay
+                    loop
+                    src="https://assets7.lottiefiles.com/packages/lf20_1pxqjqps.json"
+                    style={{ width: "300px", height: "300px" }}
+                  ></Player>
+                  <h2 className="m-0 p-0 text-lg font-bold">
+                    Select Any Database To Work On !
+                  </h2>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <CreateDialog
+          isOpen={open}
+          onNameChange={(e) => setName(e.target.value)}
+          onDescChange={(e) => setDesc(e.target.value)}
+          onTypeChange={(e) => setType(e.target.value)}
+          onAddBtnClick={() => addProject()}
+          onCancelBtnClick={() => setOpen(false)}
+        />
+        <SnackBar
+          isOpen={snackOpen}
+          content="Database Created Successfully"
+          onClose={() => setSnackOpen(false)}
+        />
+      </>
+    );
+  }
 }
